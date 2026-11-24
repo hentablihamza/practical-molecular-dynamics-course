@@ -1,0 +1,22 @@
+name: practical-molecular-dynamics-course
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.10,<3.13
+  - openmm>=8.2
+  - pdbfixer>=1.10
+  - mdtraj>=1.10
+  - mdanalysis>=2.7
+  - openmmforcefields>=0.14
+  - openff-toolkit>=0.16
+  - ambertools>=23
+  - rdkit>=2024.03
+  - numpy>=1.24
+  - pandas>=2.0
+  - scipy>=1.10
+  - matplotlib>=3.7
+  - py3dmol>=2.0
+  - jupyter
+  - notebook
+  - nbconvert
+  - ipykernel

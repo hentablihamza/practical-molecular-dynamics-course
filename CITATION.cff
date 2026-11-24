@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: "Practical Molecular Dynamics Course"
+message: "If you use these materials, please cite them using the metadata below."
+type: dataset
+authors:
+  - family-names: Hentabli
+    given-names: Hamza
+    orcid: "https://orcid.org/0000-0002-9530-2815"
+repository-code: "https://github.com/hentablihamza/practical-molecular-dynamics-course"
+url: "https://github.com/hentablihamza/practical-molecular-dynamics-course"
+abstract: >
+  A hands-on, 12-notebook course that teaches molecular dynamics step by step, from Newton's
+  equations and a hand-written velocity-Verlet integrator to force fields, thermostats and
+  barostats, periodic boundaries and PME, protein preparation, solvation, equilibration and
+  production, trajectory analysis, free energy landscapes, and protein-ligand MD of the EGFR
+  kinase with erlotinib, using OpenMM, PDBFixer, MDTraj, MDAnalysis, and openmmforcefields.
+  Every notebook runs in Google Colab with one click.
+keywords:
+  - molecular dynamics
+  - OpenMM
+  - MDAnalysis
+  - computational chemistry
+  - drug discovery
+  - free energy
+  - education
+  - tutorial
+date-released: "2026-11-24"

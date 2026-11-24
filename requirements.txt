@@ -1,0 +1,17 @@
+# Practical Molecular Dynamics Course: pip install (this is what the Colab setup cells use)
+# Covers every notebook. Notebook 11 then reads the precomputed erlotinib GAFF2 parameters in data/ligands/;
+# to compute ligand parameters yourself you need the conda environment (environment.yml), because
+# openmmforcefields relies on AmberTools (antechamber, sqm), which is not on PyPI.
+openmm>=8.2
+pdbfixer>=1.10
+mdtraj>=1.10
+MDAnalysis>=2.7
+rdkit>=2024.3
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+matplotlib>=3.7
+py3Dmol>=2.0
+jupyter>=1.0
+notebook>=7.0
+nbconvert>=7.0

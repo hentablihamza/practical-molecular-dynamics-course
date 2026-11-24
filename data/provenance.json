@@ -1,0 +1,22 @@
+{
+  "erlotinib_gaff2.xml": {
+    "molecule": "erlotinib (PDB ligand AQ4), neutral, coordinates from PDB 1M17, H added by RDKit",
+    "smiles": "COCCOc1cc2ncnc(Nc3cccc(C#C)c3)c2cc1OCCOC",
+    "force_field": "GAFF 2.11 via openmmforcefields GAFFTemplateGenerator",
+    "charges": "AM1-BCC (AmberTools sqm via OpenFF toolkit)",
+    "generated": "2026-11-24",
+    "openmm": "8.6.1"
+  },
+  "alanine_dipeptide_phi_psi.csv": {
+    "system": "ACE-ALA-NME built with AmberTools tleap (scripts/build_alanine_dipeptide.leap)",
+    "force_field": "amber14-all.xml (ff14SB) + implicit/obc2.xml (GB-OBC II)",
+    "ensemble": "NVT, LangevinMiddleIntegrator 300 K, friction 1/ps, 2 fs, HBonds constraints, no cutoff",
+    "replicas": 4,
+    "ns_per_replica": 10.0,
+    "save_interval_ps": 1.0,
+    "equilibration_ps_discarded": 100,
+    "seeds": "integrator 1000+rep, velocities 2000+rep",
+    "generated": "2026-11-24",
+    "openmm": "8.6.1"
+  }
+}

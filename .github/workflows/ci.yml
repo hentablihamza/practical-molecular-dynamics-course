@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  conda:
+    # The full stack from environment.yml (conda-forge OpenMM, openmmforcefields, AmberTools).
+    # Notebook 11 parameterizes erlotinib live with GAFF2/AM1-BCC here.
+    name: conda (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up conda environment
+        uses: mamba-org/setup-micromamba@v3
+        with:
+          environment-file: environment.yml
+          create-args: python=${{ matrix.python-version }}
+          cache-environment: true
+          init-shell: bash
+
+      - name: Show versions
+        run: python -c "import openmm, mdtraj, MDAnalysis, openmmforcefields; print('OpenMM', openmm.__version__, '| MDTraj', mdtraj.__version__, '| MDAnalysis', MDAnalysis.__version__, '| openmmforcefields', openmmforcefields.__version__)"
+
+      - name: Execute all notebooks (offline, cached structures)
+        env:
+          # Notebook 06 downloads PDB files when it can and falls back to data/structures/.
+          # COURSE_OFFLINE=1 forces the cached path so CI never depends on public web services.
+          COURSE_OFFLINE: "1"
+        run: |
+          cd notebooks
+          for nb in *.ipynb; do
+            echo "::group::$nb"
+            start=$(date +%s)
+            jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=1800 "$nb"
+            echo "$nb finished in $(( $(date +%s) - start )) s"
+            echo "::endgroup::"
+          done
+
+      - name: Confirm notebooks produced output
+        run: python .github/check_outputs.py
+
+  pip:
+    # The pip path used by the Google Colab setup cells (requirements.txt). Notebook 11 reads the
+    # precomputed ligand parameters because AmberTools is not available from PyPI.
+    name: pip / Colab path (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Execute all notebooks (offline, cached structures)
+        env:
+          COURSE_OFFLINE: "1"
+        run: |
+          cd notebooks
+          for nb in *.ipynb; do
+            echo "::group::$nb"
+            jupyter nbconvert --to notebook --execute --inplace --ExecutePreprocessor.timeout=1800 "$nb"
+            echo "::endgroup::"
+          done
+
+      - name: Confirm notebooks produced output
+        run: python .github/check_outputs.py
