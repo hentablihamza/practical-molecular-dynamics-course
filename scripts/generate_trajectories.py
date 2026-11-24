@@ -259,7 +259,7 @@ def egfr(ps=float(os.environ.get("EGFR_PS", 60.0)), save_ps=1.0, eq_ps=float(os.
     lig = app.PDBFile(str(LIG / "erlotinib_1M17_H.pdb"))
     model.add(lig.topology, lig.positions)
     solute = [a.index for a in model.topology.atoms()]
-    app.PDBFile.writeFile(model.topology, model.positions, open(TRAJ / "egfr_erlotinib_complex.pdb", "w"))
+    app.PDBFile.writeFile(model.topology, model.positions, open(TRAJ / "egfr_erlotinib_complex.pdb", "w"), keepIds=True)
     model.addSolvent(ff, model="tip3p", padding=1.0 * unit.nanometer, ionicStrength=0.15 * unit.molar,
                      boxShape="octahedron")
     log("EGFR-erlotinib solvated:", model.topology.getNumAtoms(), "atoms")
