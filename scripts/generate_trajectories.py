@@ -182,8 +182,6 @@ def chignolin(n_rep=3, ns=float(os.environ.get("CHIGNOLIN_NS", 0.25)), save_ps=2
     with open(TRAJ / f"chignolin_thermo{suffix}.csv", "w") as fh:
         fh.write("replica,time_ps,potential_kJmol,temperature_K,volume_nm3\n")
         fh.writelines(",".join(map(str, r)) + "\n" for r in rows)
-    if only is not None:
-        return  # merge the per-replica logs with `python scripts/generate_trajectories.py merge_chignolin`
     provenance("chignolin", {
         "system": "CLN025 chignolin variant YYDPETGTWY, PDB 5AWL chain A, prepared with PDBFixer, H added at pH 7",
         "solvent": "TIP3P-FB water, 1.0 nm padding, cubic box, 0.15 M NaCl", "atoms": model.topology.getNumAtoms(),
